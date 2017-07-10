@@ -56,6 +56,8 @@ public class Server {
     private class ClientDispatcher implements Runnable {
 
         private String name;
+        private String passWord;
+        private String fileName;
         private Socket clientSocket;
         private BufferedReader in = null;
         private PrintWriter out;
@@ -71,6 +73,8 @@ public class Server {
 
                 //test
                 out.println("hello");
+
+                //pedir ao client quando entrar a password e o user name
 
             } catch (IOException e) {
 
