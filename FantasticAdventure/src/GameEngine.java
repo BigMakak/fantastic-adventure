@@ -33,9 +33,9 @@ public class GameEngine {
         return false;
     }
 
-    private void giveDamage(Player player, int value, PlayerSkills skill){
+    private void giveDamage(Player player, int value){
 
-        player.changeState(false, value, skill);
+        player.changeState(false, value, PlayerSkills.LIFE);
 
     }
 
