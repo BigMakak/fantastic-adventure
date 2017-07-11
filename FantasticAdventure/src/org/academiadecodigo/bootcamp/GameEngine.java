@@ -1,4 +1,6 @@
-import enemy.CharacterSkills;
+package org.academiadecodigo.bootcamp;
+
+import org.academiadecodigo.bootcamp.enemy.CharacterSkills;
 
 /**
  * Created by codecadet on 10/07/17.
@@ -18,13 +20,12 @@ public class GameEngine {
 
     void attack(CharacterSkills skill){
 
-
     }
 
 
     private boolean checkState(Player player, int value, CharacterSkills skill){
 
-        switch(skill){
+        switch(skill) {
 
             case HEALTH:
                 return player.getHealth() > value;
@@ -64,6 +65,7 @@ public class GameEngine {
     }
 
 
+    //org.academiadecodigo.bootcamp.RandomGenerator
     private static int diceRoll(){
 
         return (int)(Math.random() * 6) + 1;

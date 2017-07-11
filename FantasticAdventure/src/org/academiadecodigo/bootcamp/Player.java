@@ -1,5 +1,7 @@
-import enemy.Character;
-import enemy.CharacterSkills;
+package org.academiadecodigo.bootcamp;
+
+import org.academiadecodigo.bootcamp.enemy.Character;
+import org.academiadecodigo.bootcamp.enemy.CharacterSkills;
 
 /**
  * Created by codecadet on 10/07/17.
