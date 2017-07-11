@@ -1,9 +1,13 @@
-/**
- * Created by codecadet on 10/07/17.
- */
-public abstract class Player {
+package org.academiadecodigo.bootcamp.enemy;
 
-    private int life;
+
+/**
+ * Created by codecadet on 11/07/17.
+ */
+public abstract class Character {
+
+    private String name;
+    private int health;
     private int charisma;
     private int intelligence;
     private int willpower;
@@ -12,16 +16,18 @@ public abstract class Player {
     private int forceBalance;
 
 
-    public void changeState(boolean positive, int value, PlayerSkills skill) {
+
+
+    public void changeState(boolean positive, int value, CharacterSkills skill) {
 
         switch (skill) {
 
-            case LIFE:
+            case HEALTH:
                 if (positive) {
-                    life += value;
+                    health += value;
                     break;
                 }
-                life -= value;
+                health -= value;
                 break;
 
             case CHARISMA:
@@ -73,32 +79,6 @@ public abstract class Player {
                 break;
         }
     }
-
-    public int getLife() {
-        return life;
-    }
-
-    public int getCharisma() {
-        return charisma;
-    }
-
-    public int getIntelligence() {
-        return intelligence;
-    }
-
-    public int getWillpower() {
-        return willpower;
-    }
-
-    public int getSelfControl() {
-        return selfControl;
-    }
-
-    public int getForce() {
-        return force;
-    }
-
-    public int getForceBalance() {
-        return forceBalance;
-    }
 }
+
+

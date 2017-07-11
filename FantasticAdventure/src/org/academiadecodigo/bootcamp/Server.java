@@ -1,3 +1,5 @@
+package org.academiadecodigo.bootcamp;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -32,26 +34,33 @@ public class Server {
 
     public void start() {
 
-        cachedThreadPool = Executors.newCachedThreadPool();
-
-        while (true) {
+        try {
 
             Socket clientSocket;
 
-            try {
+            while (true) {
+
 
                 clientSocket = serverSocket.accept();
                 ClientDispatcher client = new ClientDispatcher(clientSocket);
+                cachedThreadPool = Executors.newCachedThreadPool();
+
+                for (int i = 0; i < 5; i++) {
+
+                    cachedThreadPool.submit(client);
+                }
+
                 list.add(client);
-                cachedThreadPool.submit(client);
 
-            } catch (IOException e) {
-
-                System.err.println("Client socket error: " + e.getMessage());
-                System.exit(1);
             }
+
+        } catch (IOException e) {
+
+            System.err.println("Client socket error: " + e.getMessage());
+            System.exit(1);
         }
     }
+
 
     private class ClientDispatcher implements Runnable {
 
@@ -83,6 +92,9 @@ public class Server {
 
                     data = in.readLine();
                 }
+
+                out.println(FileManager.load("logo"));
+
 
             } catch (IOException e) {
 
@@ -222,4 +234,5 @@ public class Server {
         }
     }
 }
+
 

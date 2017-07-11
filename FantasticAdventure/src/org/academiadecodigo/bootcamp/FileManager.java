@@ -1,3 +1,5 @@
+package org.academiadecodigo.bootcamp;
+
 import java.io.*;
 
 /**
@@ -46,7 +48,7 @@ public class FileManager {
         BufferedReader inputBufferedReader;
 
         try {
-            inputBufferedReader = new BufferedReader(new java.io.FileReader(fileName + ".txt"));
+            inputBufferedReader = new BufferedReader(new FileReader("resources/" + fileName + ".txt"));
 
             while((line = inputBufferedReader.readLine()) != null) {
                 fileContent += line + "\n";
