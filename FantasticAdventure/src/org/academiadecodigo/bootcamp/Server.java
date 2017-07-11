@@ -34,33 +34,26 @@ public class Server {
 
     public void start() {
 
-        try {
+        cachedThreadPool = Executors.newCachedThreadPool();
+
+        while (true) {
 
             Socket clientSocket;
 
-            while (true) {
-
+            try {
 
                 clientSocket = serverSocket.accept();
                 ClientDispatcher client = new ClientDispatcher(clientSocket);
-                cachedThreadPool = Executors.newCachedThreadPool();
-
-                for (int i = 0; i < 5; i++) {
-
-                    cachedThreadPool.submit(client);
-                }
-
                 list.add(client);
+                cachedThreadPool.submit(client);
 
+            } catch (IOException e) {
+
+                System.err.println("Client socket error: " + e.getMessage());
+                System.exit(1);
             }
-
-        } catch (IOException e) {
-
-            System.err.println("Client socket error: " + e.getMessage());
-            System.exit(1);
         }
     }
-
 
     private class ClientDispatcher implements Runnable {
 
@@ -92,9 +85,6 @@ public class Server {
 
                     data = in.readLine();
                 }
-
-                out.println(FileManager.load("logo"));
-
 
             } catch (IOException e) {
 
@@ -234,5 +224,4 @@ public class Server {
         }
     }
 }
-
 

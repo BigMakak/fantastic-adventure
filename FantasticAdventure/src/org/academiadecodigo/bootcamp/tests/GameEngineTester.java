@@ -1,4 +1,7 @@
-package org.academiadecodigo.bootcamp;
+package org.academiadecodigo.bootcamp.tests;
+
+import org.academiadecodigo.bootcamp.GameEngine;
+import org.academiadecodigo.bootcamp.RandomGenerator;
 
 /**
  * Created by codecadet on 11/07/17.
