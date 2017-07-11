@@ -1,15 +1,33 @@
+import enemy.CharacterSkills;
+
 /**
  * Created by codecadet on 10/07/17.
  */
 public class GameEngine {
 
 
-    private boolean checkState(Player player, int value, PlayerSkills skill){
+    //info from players and enemies
+    public void getFIleInfo(String fileName) {
+
+    }
+
+    public void sendFileInfo() {
+
+    }
+
+
+    void attack(CharacterSkills skill){
+
+
+    }
+
+
+    private boolean checkState(Player player, int value, CharacterSkills skill){
 
         switch(skill){
 
-            case LIFE:
-                return player.getLife() > value;
+            case HEALTH:
+                return player.getHealth() > value;
 
             case CHARISMA:
                 return player.getCharisma() > value;
@@ -35,13 +53,19 @@ public class GameEngine {
 
     private void giveDamage(Player player, int value){
 
-        player.changeState(false, value, PlayerSkills.LIFE);
+        player.changeState(false, value, CharacterSkills.HEALTH);
 
     }
 
-    private void givePoints(Player player, int value, PlayerSkills skill) {
+    private void givePoints(Player player, int value, CharacterSkills skill) {
 
         player.changeState(true, value, skill);
 
+    }
+
+
+    private static int diceRoll(){
+
+        return (int)(Math.random() * 6) + 1;
     }
 }
