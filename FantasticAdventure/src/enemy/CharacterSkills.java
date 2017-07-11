@@ -1,3 +1,5 @@
+package enemy;
+
 /**
  * Created by codecadet on 10/07/17.
  */

@@ -1,3 +1,5 @@
+import enemy.CharacterSkills;
+
 /**
  * Created by codecadet on 10/07/17.
  */
@@ -5,11 +7,11 @@ public class GameEngine {
 
 
     //info from players and enemies
-    public void getFIleInfo() {
+    public void getFIleInfo(String fileName) {
 
     }
 
-    public void sendFileInfo(){
+    public void sendFileInfo() {
 
     }
 

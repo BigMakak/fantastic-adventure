@@ -1,7 +1,10 @@
+import enemy.Character;
+import enemy.CharacterSkills;
+
 /**
  * Created by codecadet on 10/07/17.
  */
-public class Player extends Character{
+public class Player extends Character {
 
     private String name;
     private int health;

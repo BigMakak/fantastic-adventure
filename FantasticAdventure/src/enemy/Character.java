@@ -1,3 +1,7 @@
+package enemy;
+
+import enemy.CharacterSkills;
+
 /**
  * Created by codecadet on 11/07/17.
  */

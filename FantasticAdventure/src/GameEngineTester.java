@@ -10,7 +10,7 @@ public class GameEngineTester {
 
         for (int i = 0; i < 20; i++) {
 
-            System.out.println(gameEngine.diceRoll());
+            System.out.println(RandomGenerator.randomGenerator(1,10));
         }
     }
 }
