@@ -1,9 +1,10 @@
 /**
  * Created by codecadet on 10/07/17.
  */
-public abstract class Player {
+public class Player extends Character{
 
-    private int life;
+    private String name;
+    private int health;
     private int charisma;
     private int intelligence;
     private int willpower;
@@ -12,70 +13,29 @@ public abstract class Player {
     private int forceBalance;
 
 
-    public void changeState(boolean positive, int value, PlayerSkills skill) {
-
-        switch (skill) {
-
-            case LIFE:
-                if (positive) {
-                    life += value;
-                    break;
-                }
-                life -= value;
-                break;
-
-            case CHARISMA:
-                if (positive) {
-                    charisma += value;
-                    break;
-                }
-                charisma -= value;
-                break;
-
-            case INTELLIGENCE:
-                if (positive) {
-                    intelligence += value;
-                    break;
-                }
-                intelligence -= value;
-                break;
-
-            case WILLPOWER:
-                if (positive) {
-                    willpower += value;
-                    break;
-                }
-                willpower -= value;
-                break;
-
-            case SELFCONTROL:
-                if (positive) {
-                    selfControl += value;
-                    break;
-                }
-                selfControl -= value;
-                break;
-
-            case FORCE:
-                if (positive) {
-                    force += value;
-                    break;
-                }
-                force -= value;
-                break;
-
-            case FORCEBALANCE:
-                if (positive) {
-                    forceBalance += value;
-                    break;
-                }
-                forceBalance -= value;
-                break;
-        }
+    public Player(String name, int health, int charisma, int intelligence, int willpower, int selfControl, int force, int forceBalance) {
+        this.name = name;
+        this.health = health;
+        this.charisma = charisma;
+        this.intelligence = intelligence;
+        this.willpower = willpower;
+        this.selfControl = selfControl;
+        this.force = force;
+        this.forceBalance = forceBalance;
     }
 
-    public int getLife() {
-        return life;
+
+    @Override
+    public void changeState(boolean positive, int value, CharacterSkills skill) {
+        super.changeState(positive, value, skill);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     public int getCharisma() {

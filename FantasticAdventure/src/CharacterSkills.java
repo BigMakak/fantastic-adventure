@@ -1,9 +1,9 @@
 /**
  * Created by codecadet on 10/07/17.
  */
-public enum PlayerSkills {
+public enum CharacterSkills {
 
-    LIFE,
+    HEALTH,
     CHARISMA,
     INTELLIGENCE,
     WILLPOWER,
