@@ -14,6 +14,12 @@ public class GameEngine {
     }
 
 
+    void attack(CharacterSkills skill){
+
+
+    }
+
+
     private boolean checkState(Player player, int value, CharacterSkills skill){
 
         switch(skill){
@@ -53,5 +59,11 @@ public class GameEngine {
 
         player.changeState(true, value, skill);
 
+    }
+
+
+    private static int diceRoll(){
+
+        return (int)(Math.random() * 6) + 1;
     }
 }
