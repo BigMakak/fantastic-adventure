@@ -1,6 +1,10 @@
-import enemy.Character;
-import enemy.CharacterSkills;
-import enemy.Enemy;
+
+package org.academiadecodigo.bootcamp;
+
+import org.academiadecodigo.bootcamp.enemy.Character;
+import org.academiadecodigo.bootcamp.enemy.CharacterSkills;
+import org.academiadecodigo.bootcamp.enemy.Enemy;
+
 
 /**
  * Created by codecadet on 10/07/17.
@@ -19,6 +23,7 @@ public class GameEngine {
 
 
     private void attack(Player player, Enemy enemy, CharacterSkills skill) {
+
 
         int playerDice = diceRoll() + player.getForce();
         int enemyDice = diceRoll() + enemy.getForce(); //TODO: getter is missing in Enemy
@@ -44,7 +49,8 @@ public class GameEngine {
 
     private boolean skillCheck(Player player, int value, CharacterSkills skill) {
 
-        switch (skill) {
+
+        switch(skill) {
 
             case HEALTH:
                 return player.getHealth() > value;
@@ -75,6 +81,7 @@ public class GameEngine {
 
         character.changeState(false, value, CharacterSkills.HEALTH);
     }
+
 
 
     private static int diceRoll() { //TODO: change to randomGenerator
