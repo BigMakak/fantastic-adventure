@@ -16,7 +16,7 @@
       <file leaf-file-name="FileManager.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/FileManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
+            <state relative-caret-position="269">
               <caret line="39" column="38" lean-forward="false" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
               <folding />
             </state>
@@ -515,12 +515,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1499626477823</updated>
-      <workItem from="1499626483188" duration="1090000" />
+      <workItem from="1499626483188" duration="1826000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1090000" />
+    <option name="totallyTimeSpent" value="1826000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="603" y="96" width="1182" height="773" extended-state="0" />
@@ -568,7 +568,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/FileManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
+        <state relative-caret-position="269">
           <caret line="39" column="38" lean-forward="false" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
           <folding />
         </state>
