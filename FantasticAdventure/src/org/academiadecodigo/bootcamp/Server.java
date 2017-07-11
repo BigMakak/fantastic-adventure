@@ -1,3 +1,5 @@
+package org.academiadecodigo.bootcamp;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -50,7 +52,6 @@ public class Server {
 
                 list.add(client);
 
-                System.out.println("Jorge");
             }
 
         } catch (IOException e) {
@@ -90,9 +91,8 @@ public class Server {
 
                 passWord = in.readLine();
 
-                for (int i = 0; i < 50; i++) {
-                    send(FileManager.load("resources/logo"));
-                }
+                out.println(FileManager.load("logo"));
+
 
             } catch (IOException e) {
 
