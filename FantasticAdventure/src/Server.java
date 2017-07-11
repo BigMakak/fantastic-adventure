@@ -57,7 +57,8 @@ public class Server {
 
         private String name;
         private String passWord;
-        private String fileName;
+        private String fileName = "1";
+        private String data;
         private Socket clientSocket;
         private BufferedReader in = null;
         private PrintWriter out;
@@ -71,14 +72,20 @@ public class Server {
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-                //test
-                out.println("hello");
+                out.print("Enter your nickname: ");
+                out.flush();
 
-                //pedir ao client quando entrar a password e o user name
+                name = in.readLine();
+
+                out.print("Enter your password: ");
+                out.flush();
+
+                passWord = in.readLine();
 
             } catch (IOException e) {
 
                 System.out.println("in and out client dispatcher: " + e.getMessage());
+                System.exit(1);
             }
 
 
@@ -87,19 +94,17 @@ public class Server {
         @Override
         public void run() {
 
-            String lastData = "";
-
             while (true) {
 
                 try {
 
-                    String data = in.readLine();
+                    data = in.readLine();
 
                     send(data);
-
                 } catch (IOException e) {
 
-                    e.printStackTrace();
+                    System.err.println("ClientDispatcher run error: " + e.getMessage());
+                    System.exit(1);
                 }
             }
         }
@@ -107,6 +112,16 @@ public class Server {
         public void send(String data) {
 
             out.println(data);
+        }
+
+        public String getData() {
+
+            return data;
+        }
+
+        public void setFileName(String fileName) {
+
+            this.fileName = fileName;
         }
     }
 }
