@@ -100,7 +100,6 @@ public class Server {
 
                     data = in.readLine();
 
-                    send(data);
                 } catch (IOException e) {
 
                     System.err.println("ClientDispatcher run error: " + e.getMessage());
