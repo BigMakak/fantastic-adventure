@@ -66,51 +66,149 @@ public class Server {
         public ClientDispatcher(Socket clientSocket) {
 
             this.clientSocket = clientSocket;
-
-            try {
-
-                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                out = new PrintWriter(clientSocket.getOutputStream(), true);
-
-                out.print("Enter your nickname: ");
-                out.flush();
-
-                name = in.readLine();
-
-                out.print("Enter your password: ");
-                out.flush();
-
-                passWord = in.readLine();
-
-            } catch (IOException e) {
-
-                System.out.println("in and out client dispatcher: " + e.getMessage());
-                System.exit(1);
-            }
-
-
         }
 
         @Override
         public void run() {
 
-            while (true) {
+            try {
+                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-                try {
+                logInOrRegister();
+
+                send("\u001b[2J"); //clear screen terminal
+
+                while (true) {
 
                     data = in.readLine();
+                }
 
-                } catch (IOException e) {
+            } catch (IOException e) {
 
-                    System.err.println("ClientDispatcher run error: " + e.getMessage());
-                    System.exit(1);
+                System.err.println("ClientDispatcher method run error: " + e.getMessage());
+                System.exit(1);
+            }
+        }
+
+        private void logInOrRegister() throws IOException {
+
+            while (true) {
+
+                out.print("Choose [1] to Login or [2] to Register: ");
+                out.flush();
+                String result = in.readLine();
+
+                if (result.equals("1")) {
+
+                    logIn();
+                    return;
+                }
+
+                if (result.equals("2")) {
+
+                    register();
+                    return;
                 }
             }
         }
 
+        private void register() throws IOException {
+
+            boolean islogin = true;
+
+            while (islogin) {
+
+                out.print("Enter a new nickname: ");
+                out.flush();
+                String result = in.readLine();
+
+                result = checkName(result);
+
+                if (result != null) {
+
+                    name = result;
+                    islogin = false;
+                }
+            }
+
+            out.print("Enter a new password: ");
+            out.flush();
+            passWord = in.readLine();
+        }
+
+        private void logIn() throws IOException {
+
+            boolean islogin = true;
+
+            while (islogin) {
+
+                out.print("Enter your nickname: ");
+                out.flush();
+                String result = in.readLine();
+
+                result = checkName(result);
+
+                if (result != null) {
+
+                    islogin = false;
+                }
+            }
+
+            while (true) {
+
+                out.print("Enter your password: ");
+                out.flush();
+                String result = in.readLine();
+
+                synchronized (list) {
+
+                    for (ClientDispatcher cd : list) {
+
+                        if (result.equals(cd.passWord)) {
+
+
+                            return;
+                        }
+                    }
+                }
+
+                out.println("wrong password, try again...\n");
+            }
+        }
+
+        private String checkName(String result) {
+
+            synchronized (list) {
+
+                for (ClientDispatcher cd : list) {
+
+                    if (result.equals(cd.name)) {
+
+                        out.println(result + " is taken.\n");
+                        result = null;
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public String[] clientRequest() {
+
+            String[] result = new String[3];
+
+            result[0] = fileName;
+            result[1] = name;
+            result[2] = data;
+
+            return result;
+        }
+
         public void send(String data) {
 
-            out.println(data);
+            out.print(data);
+            out.flush();
         }
 
         public String getData() {
