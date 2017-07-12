@@ -18,6 +18,7 @@ public class Server {
     private String header;
     private ExecutorService cachedThreadPool;
     private List<ClientDispatcher> list = new LinkedList<>();
+    private Game game = new Game();
 
 
     public Server() {
@@ -55,6 +56,8 @@ public class Server {
         }
     }
 
+
+
     private class ClientDispatcher implements Runnable {
 
         private String name;
@@ -62,7 +65,7 @@ public class Server {
         private String fileName = "1";
         private String data;
         private Socket clientSocket;
-        private BufferedReader in = null;
+        private BufferedReader in ;
         private PrintWriter out;
 
         public ClientDispatcher(Socket clientSocket) {
@@ -80,6 +83,8 @@ public class Server {
                 logInOrRegister();
 
                 send("\u001b[2J"); //clear screen terminal
+                out.println(game.sendStory(Story.CHAPTER1));
+                choosePath();
 
                 while (true) {
 
@@ -93,9 +98,28 @@ public class Server {
             }
         }
 
+        private void choosePath(String story) throws IOException {
+            String playerInput = in.readLine();
+            if(playerInput.matches(story)) {
+                send("\u001b[2J"); //clear screen terminal
+                send(game.sendStory(Story.CHAPTER2));
+            }
+            if(playerInput.matches(story)) {
+                send("\u001b[2J"); //clear screen terminal
+                send(game.sendStory(Story.CHAPTER3));
+            }
+            if(playerInput.matches(story)) {
+                send("\u001b[2J"); //clear screen terminal
+                send(game.sendStory(Story.CHAPTER4));
+            }
+            if(playerInput.matches(story)) {
+            }
+        }
+
         private void logInOrRegister() throws IOException {
 
             while (true) {
+
 
                 out.print("Choose [1] to Login or [2] to Register: ");
                 out.flush();
@@ -112,6 +136,7 @@ public class Server {
                     register();
                     return;
                 }
+
             }
         }
 
@@ -205,6 +230,11 @@ public class Server {
             result[2] = data;
 
             return result;
+        }
+
+        public void sendToServer(String data) {
+
+
         }
 
         public void send(String data) {
