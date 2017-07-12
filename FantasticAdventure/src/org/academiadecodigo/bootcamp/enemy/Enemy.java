@@ -7,12 +7,12 @@ public class Enemy extends Character {
 
     private int health;
     private String name;
-    private int attack;
+    private int force;
 
-    public Enemy(int health,String name,int attack) {
+    public Enemy(int health,String name,int force) {
         this.health = health;
         this.name = name;
-        this.attack = attack;
+        this.force = force;
     }
 
 
@@ -28,5 +28,9 @@ public class Enemy extends Character {
 
     public String getName() {
         return name;
+    }
+
+    public int getForce() {
+        return this.force;
     }
 }
