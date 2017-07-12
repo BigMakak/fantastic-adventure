@@ -1,6 +1,10 @@
+
 package org.academiadecodigo.bootcamp;
 
+import org.academiadecodigo.bootcamp.enemy.Character;
 import org.academiadecodigo.bootcamp.enemy.CharacterSkills;
+import org.academiadecodigo.bootcamp.enemy.Enemy;
+
 
 /**
  * Created by codecadet on 10/07/17.
@@ -18,12 +22,33 @@ public class GameEngine {
     }
 
 
-    void attack(CharacterSkills skill){
+    private void attack(Player player, Enemy enemy, CharacterSkills skill) {
 
+
+        int playerDice = diceRoll() + player.getForce();
+        int enemyDice = diceRoll() + enemy.getForce(); //TODO: getter is missing in Enemy
+
+        if (player.getHealth() > 0 && enemy.getHealth() > 0) {
+
+            if (playerDice > enemyDice) {
+                giveDamage(enemy, diceRoll());
+                return;
+            }
+            giveDamage(player, diceRoll());
+        }
     }
 
 
-    private boolean checkState(Player player, int value, CharacterSkills skill){
+    private void givePoints(Player player, int value, CharacterSkills skill) {
+
+        if (skillCheck(player, value, skill)) {
+            player.changeState(true, diceRoll(), skill);
+        }
+    }
+
+
+    private boolean skillCheck(Player player, int value, CharacterSkills skill) {
+
 
         switch(skill) {
 
@@ -47,27 +72,20 @@ public class GameEngine {
 
             case FORCEBALANCE:
                 return player.getForceBalance() > value;
-
         }
         return false;
     }
 
-    private void giveDamage(Player player, int value){
 
-        player.changeState(false, value, CharacterSkills.HEALTH);
+    private void giveDamage(Character character, int value) {
 
-    }
-
-    private void givePoints(Player player, int value, CharacterSkills skill) {
-
-        player.changeState(true, value, skill);
-
+        character.changeState(false, value, CharacterSkills.HEALTH);
     }
 
 
-    //org.academiadecodigo.bootcamp.RandomGenerator
-    private static int diceRoll(){
 
-        return (int)(Math.random() * 6) + 1;
+    private static int diceRoll() { //TODO: change to randomGenerator
+
+        return (int) (Math.random() * 6) + 1;
     }
 }
