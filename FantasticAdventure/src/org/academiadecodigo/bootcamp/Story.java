@@ -5,8 +5,8 @@ package org.academiadecodigo.bootcamp;
  */
 public enum Story {
 
-    CHAPTER1,
-    CHAPTER2,
-    CHAPTER3,
-    CHAPTER4;
+    CHOICE1,
+    CHOICE2,
+    CHOICE3,
+    CHOICE4
 }

@@ -15,11 +15,11 @@ public class Server {
 
     private int port = 8080;
     private ServerSocket serverSocket;
-    private String header;
+    private String[] clientInfo;
+
     private ExecutorService cachedThreadPool;
     private List<ClientDispatcher> list = new LinkedList<>();
-    private Game game = new Game();
-
+    private MessageHandler messageHandler;
 
     public Server() {
 
@@ -56,14 +56,19 @@ public class Server {
         }
     }
 
+    public List getList() {
+        return this.list;
+    }
 
 
-    private class ClientDispatcher implements Runnable {
+
+
+    public class ClientDispatcher implements Runnable {
 
         private String name;
         private String passWord;
         private String fileName = "1";
-        private String data;
+        private String clientOption;
         private Socket clientSocket;
         private BufferedReader in ;
         private PrintWriter out;
@@ -83,12 +88,14 @@ public class Server {
                 logInOrRegister();
 
                 send("\u001b[2J"); //clear screen terminal
-                out.println(game.sendStory(Story.CHAPTER1));
-                choosePath();
+
+                out.println(FileManager.load("1"));
 
                 while (true) {
 
-                    data = in.readLine();
+                    clientOption = in.readLine();
+                    //TODO: fromServer enviar clientOption
+                    out.println(messageHandler.toServer());
                 }
 
             } catch (IOException e) {
@@ -98,23 +105,23 @@ public class Server {
             }
         }
 
-        private void choosePath(String story) throws IOException {
+        /*private void choosePath() throws IOException {
             String playerInput = in.readLine();
-            if(playerInput.matches(story)) {
+            if(playerInput.matches("1")) {
                 send("\u001b[2J"); //clear screen terminal
-                send(game.sendStory(Story.CHAPTER2));
+                send(game.sendStory(Story.CHOICE2));
             }
-            if(playerInput.matches(story)) {
+            if(playerInput.matches("2")) {
                 send("\u001b[2J"); //clear screen terminal
-                send(game.sendStory(Story.CHAPTER3));
+                send(game.sendStory(Story.CHOICE3));
             }
-            if(playerInput.matches(story)) {
+            if(playerInput.matches("3")) {
                 send("\u001b[2J"); //clear screen terminal
-                send(game.sendStory(Story.CHAPTER4));
+                send(game.sendStory(Story.CHOICE4));
             }
-            if(playerInput.matches(story)) {
+            if(playerInput.matches("4")) {
             }
-        }
+        } */
 
         private void logInOrRegister() throws IOException {
 
@@ -227,15 +234,11 @@ public class Server {
 
             result[0] = fileName;
             result[1] = name;
-            result[2] = data;
+            result[2] = clientOption;
 
             return result;
         }
 
-        public void sendToServer(String data) {
-
-
-        }
 
         public void send(String data) {
 
@@ -243,9 +246,17 @@ public class Server {
             out.flush();
         }
 
-        public String getData() {
+        public String getClientOption() {
 
-            return data;
+            return clientOption;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getFileName() {
+            return fileName;
         }
 
         public void setFileName(String fileName) {
@@ -253,5 +264,16 @@ public class Server {
             this.fileName = fileName;
         }
     }
+
+
+    public String[] getClientInfo() {
+        return this.clientInfo;
+    }
+
+
+    public void setMessageHandler(MessageHandler messageHandler) {
+        this.messageHandler = messageHandler;
+    }
+
 }
 
