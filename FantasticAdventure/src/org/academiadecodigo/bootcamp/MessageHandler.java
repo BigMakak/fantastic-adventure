@@ -5,7 +5,7 @@ package org.academiadecodigo.bootcamp;
  */
 public interface MessageHandler {
 
-    void fromServer(String[] message);
+    void fromServer(String fromClient);
 
-    String toServer();
+    String toServer();//Argument no server para mandar strings;
 }

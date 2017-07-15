@@ -20,6 +20,7 @@ public class Server {
     private ExecutorService cachedThreadPool;
     private List<ClientDispatcher> list = new LinkedList<>();
     private MessageHandler messageHandler;
+    private String clientOption;
 
     public Server() {
 
@@ -56,11 +57,28 @@ public class Server {
         }
     }
 
-    public List getList() {
-        return this.list;
+    public synchronized String sendClientOption() {
+
+        try {
+
+            if (clientOption == null) {
+                wait();
+            }
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return clientOption;
     }
 
+    public String[] getClientInfo() {
+        return this.clientInfo;
+    }
 
+    public void setMessageHandler(MessageHandler messageHandler) {
+        this.messageHandler = messageHandler;
+    }
 
 
     public class ClientDispatcher implements Runnable {
@@ -68,12 +86,11 @@ public class Server {
         private String name;
         private String passWord;
         private String fileName = "1";
-        private String clientOption;
         private Socket clientSocket;
-        private BufferedReader in ;
+        private BufferedReader in;
         private PrintWriter out;
 
-        public ClientDispatcher(Socket clientSocket) {
+        private ClientDispatcher(Socket clientSocket) {
 
             this.clientSocket = clientSocket;
         }
@@ -89,13 +106,17 @@ public class Server {
 
                 send("\u001b[2J"); //clear screen terminal
 
-                out.println(FileManager.load("1"));
+                out.println(FileManager.load("001"));
 
                 while (true) {
 
                     clientOption = in.readLine();
+                    messageHandler.fromServer(clientOption);
+                    System.out.println("passei");
                     //TODO: fromServer enviar clientOption
-                    out.println(messageHandler.toServer());
+                    String fromGame = messageHandler.toServer();
+                    fileName = fromGame.substring(0, 3);
+                    out.println(fromGame.substring(3));
                 }
 
             } catch (IOException e) {
@@ -105,46 +126,23 @@ public class Server {
             }
         }
 
-        /*private void choosePath() throws IOException {
-            String playerInput = in.readLine();
-            if(playerInput.matches("1")) {
-                send("\u001b[2J"); //clear screen terminal
-                send(game.sendStory(Story.CHOICE2));
-            }
-            if(playerInput.matches("2")) {
-                send("\u001b[2J"); //clear screen terminal
-                send(game.sendStory(Story.CHOICE3));
-            }
-            if(playerInput.matches("3")) {
-                send("\u001b[2J"); //clear screen terminal
-                send(game.sendStory(Story.CHOICE4));
-            }
-            if(playerInput.matches("4")) {
-            }
-        } */
 
         private void logInOrRegister() throws IOException {
 
-            while (true) {
+            out.print("Choose [1] to Login or [2] to Register: ");
+            out.flush();
+            String result = in.readLine();
 
+            if (result.equals("1")) {
 
-                out.print("Choose [1] to Login or [2] to Register: ");
-                out.flush();
-                String result = in.readLine();
-
-                if (result.equals("1")) {
-
-                    logIn();
-                    return;
-                }
-
-                if (result.equals("2")) {
-
-                    register();
-                    return;
-                }
-
+                logIn();
             }
+
+            if (result.equals("2")) {
+
+                register();
+            }
+
         }
 
         private void register() throws IOException {
@@ -189,7 +187,8 @@ public class Server {
                 }
             }
 
-            while (true) {
+            boolean check = true;
+            while (check) {
 
                 out.print("Enter your password: ");
                 out.flush();
@@ -200,9 +199,8 @@ public class Server {
                     for (ClientDispatcher cd : list) {
 
                         if (result.equals(cd.passWord)) {
-
-
-                            return;
+                            check = false;
+                            break;
                         }
                     }
                 }
@@ -263,16 +261,7 @@ public class Server {
 
             this.fileName = fileName;
         }
-    }
 
-
-    public String[] getClientInfo() {
-        return this.clientInfo;
-    }
-
-
-    public void setMessageHandler(MessageHandler messageHandler) {
-        this.messageHandler = messageHandler;
     }
 
 }

@@ -26,7 +26,7 @@ public class GameEngine {
 
 
         int playerDice = diceRoll() + player.getForce();
-        int enemyDice = diceRoll() + enemy.getForce(); //TODO: getter is missing in Enemy
+        int enemyDice = diceRoll() + enemy.getForce();
 
         if (player.getHealth() > 0 && enemy.getHealth() > 0) {
 
@@ -71,7 +71,7 @@ public class GameEngine {
                 return player.getForce() > value;
 
             case FORCEBALANCE:
-                return player.getForceBalance() > value;
+                return player.getBalance() > value;
         }
         return false;
     }
