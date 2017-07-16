@@ -56,23 +56,6 @@ public class Game implements MessageHandler {
         System.out.println("checks array: " + force + "-" + skill + "-" + checkScore + "-" + points + "-" + hasEnemy + "-" + enemyHealth);
 
 
-        // GivePoints
-        if (!points.equals("0")) {
-
-            if (points.equals("+")) {
-                GameEngine.givePoints(player, checkScore, "B");
-                return;
-            }
-            if (points.equals("-")) {
-                GameEngine.givePoints(player, (checkScore * (-1)), "B");
-                return;
-            }
-
-            int pointsInt = Integer.parseInt(points);
-            GameEngine.givePoints(player, pointsInt, skill);
-
-        }
-
         // SkillChecks
         boolean skillCheck = true;
         System.out.println("skill is: " + skill);
@@ -88,6 +71,7 @@ public class Game implements MessageHandler {
         System.out.println("Client choice is " + clientChoice);
 
         System.out.println("passed skillCheck: " + skillCheck);
+
         if (skillCheck) {
 
             switch (clientChoice) {
@@ -122,33 +106,56 @@ public class Game implements MessageHandler {
             fileName = fileIfFails;
         }
 
-        messageToServer = fileName;
-        headerBody = FileManager.load(fileName).split("\\n", 2);
-        messageToServer += headerBody[1];
-        calcDone = true;
 
+        // GivePoints
+        if (!points.equals("0")) {
+
+            if (points.equals("+") && skillCheck) {
+                GameEngine.givePoints(player, checkScore, "B");
+                return;
+            }
+            if (points.equals("-")) {
+                GameEngine.givePoints(player, (checkScore * (-1)), "B");
+                return;
+            }
+
+            int pointsInt = Integer.parseInt(points);
+            GameEngine.givePoints(player, pointsInt, skill);
+
+        }
 
         // Battles
         Enemy enemy = null;
-        String battleStatus;
 
         if (hasEnemy.equals("1")) {
             enemy = enemyFactory.createEnemy(EnemyTypes.MERCENARY, enemyHealth);
             System.out.println("enemy!");
 
-           if (player.getHealth() > 0 || enemy.getHealth() > 0) {
+            while (player.getHealth() > 0 && enemy.getHealth() > 0) {
 
                 int playerHealth = player.getHealth();
                 int playerForce = player.getForce();
 
                 GameEngine.attack(player, enemy);
 
-                battleStatus = "Battle Status: \n" + player.getName() + " health: " + playerHealth + "\n" + enemy.getName() + " health: " + enemyHealth + "\n";
-                messageToServer += battleStatus;
-                //System.out.println("player force: " + player.getForce() + " enemy force: " + enemy.getForce() + " player health: " + player.getHealth() + " enemy health: " + enemy.getHealth());
+                if (playerHealth == 0) {
+                    fileName = fileIfFails;
+                    return;
+                }
+                if (enemyHealth == 0) {
+                    return;
+                }
+
+                System.out.println("player force: " + player.getForce() + " enemy force: " + enemy.getForce() + " player health: " + player.getHealth() + " enemy health: " + enemy.getHealth());
 
             }
         }
+
+        messageToServer = fileName;
+        headerBody = FileManager.load(fileName).split("\\n", 2);
+        messageToServer += headerBody[1];
+        calcDone = true;
+
     }
 
 

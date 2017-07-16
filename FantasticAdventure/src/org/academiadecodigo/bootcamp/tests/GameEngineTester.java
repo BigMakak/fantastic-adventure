@@ -19,6 +19,6 @@ public class GameEngineTester {
 
        Player player = new Player("bob",10,10,10,10,10,10,10);
 
-        System.out.println(GameEngine.skillCheck(player,22, CharacterSkills.INTELLIGENCE));
+       // System.out.println(GameEngine.skillCheck(player,22, CharacterSkills.INTELLIGENCE));
     }
 }
