@@ -10,6 +10,8 @@ reated by https://www.gitignore.io/api/macos,windows,intellij,intellij+iml
 .idea/**/tasks.xml
 .idea/dictionaries
 .idea/workspace.xml
+.idea/misc.xml
+.idea/
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
