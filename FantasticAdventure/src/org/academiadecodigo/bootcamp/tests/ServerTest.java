@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.tests;
 
+import org.academiadecodigo.bootcamp.Game;
 import org.academiadecodigo.bootcamp.Server;
 
 /**
@@ -9,7 +10,11 @@ public class ServerTest {
     public static void main(String[] args) {
 
         Server server = new Server();
+        Game game = new Game();
+        game.init();
 
+
+        server.setMessageHandler(game);
         server.start();
     }
 }

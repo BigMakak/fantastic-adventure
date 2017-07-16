@@ -15,10 +15,10 @@ public class Server {
 
     private int port = 8080;
     private ServerSocket serverSocket;
-    private String header;
     private ExecutorService cachedThreadPool;
     private List<ClientDispatcher> list = new LinkedList<>();
-
+    private MessageHandler messageHandler;
+    private String clientOption;
 
     public Server() {
 
@@ -55,17 +55,22 @@ public class Server {
         }
     }
 
-    private class ClientDispatcher implements Runnable {
+
+    public void setMessageHandler(MessageHandler messageHandler) {
+        this.messageHandler = messageHandler;
+    }
+
+
+    public class ClientDispatcher implements Runnable {
 
         private String name;
         private String passWord;
-        private String fileName = "1";
-        private String data;
+        private String fileName = "000";
         private Socket clientSocket;
-        private BufferedReader in = null;
+        private BufferedReader in;
         private PrintWriter out;
 
-        public ClientDispatcher(Socket clientSocket) {
+        private ClientDispatcher(Socket clientSocket) {
 
             this.clientSocket = clientSocket;
         }
@@ -81,9 +86,23 @@ public class Server {
 
                 send("\u001b[2J"); //clear screen terminal
 
+                out.println(messageHandler.toServer());
+                out.println("Press 1 to start the game!");
+
                 while (true) {
 
-                    data = in.readLine();
+                    clientOption = in.readLine();
+                    send("\u001b[2J"); //clear screen terminal
+                    messageHandler.fromServer(clientOption);
+                    System.out.println("Joined String : " + fileName);
+                    String message = messageHandler.toServer();
+
+                    if (message != null && !message.equals("")) {
+
+                        out.println(message.substring(3));
+                        fileName = message.substring(0, 3);
+                    }
+
                 }
 
             } catch (IOException e) {
@@ -93,26 +112,23 @@ public class Server {
             }
         }
 
+
         private void logInOrRegister() throws IOException {
 
-            while (true) {
+            out.print("Choose [1] to Login or [2] to Register: ");
+            out.flush();
+            String result = in.readLine();
 
-                out.print("Choose [1] to Login or [2] to Register: ");
-                out.flush();
-                String result = in.readLine();
+            if (result.equals("1")) {
 
-                if (result.equals("1")) {
-
-                    logIn();
-                    return;
-                }
-
-                if (result.equals("2")) {
-
-                    register();
-                    return;
-                }
+                logIn();
             }
+
+            if (result.equals("2")) {
+
+                register();
+            }
+
         }
 
         private void register() throws IOException {
@@ -157,7 +173,8 @@ public class Server {
                 }
             }
 
-            while (true) {
+            boolean check = true;
+            while (check) {
 
                 out.print("Enter your password: ");
                 out.flush();
@@ -168,9 +185,8 @@ public class Server {
                     for (ClientDispatcher cd : list) {
 
                         if (result.equals(cd.passWord)) {
-
-
-                            return;
+                            check = false;
+                            break;
                         }
                     }
                 }
@@ -202,10 +218,11 @@ public class Server {
 
             result[0] = fileName;
             result[1] = name;
-            result[2] = data;
+            result[2] = clientOption;
 
             return result;
         }
+
 
         public void send(String data) {
 
@@ -213,15 +230,21 @@ public class Server {
             out.flush();
         }
 
-        public String getData() {
 
-            return data;
+        public String getName() {
+            return name;
+        }
+
+        public String getFileName() {
+            return fileName;
         }
 
         public void setFileName(String fileName) {
 
             this.fileName = fileName;
         }
+
     }
+
 }
 
