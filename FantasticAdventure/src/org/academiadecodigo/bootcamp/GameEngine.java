@@ -32,9 +32,10 @@ public class GameEngine {
 
     public static void givePoints(Player player, int value, String skill) {
 
-
-        if (skillCheck(player, value,skill)) {
-            player.changeState(true, diceRoll(), skillConverter(skill));
+        if (value > 0) {
+            player.changeState(true, value, skillConverter(skill));
+        } else if (value < 0) {
+            player.changeState(false, value, skillConverter(skill));
         }
     }
 
@@ -60,6 +61,11 @@ CharacterSkills skill = null;
                 break;
             case "B":
                 skill = CharacterSkills.FORCEBALANCE;
+                break;
+            case "F":
+                skill = CharacterSkills.FORCE;
+                break;
+
         }
         return skill;
     }

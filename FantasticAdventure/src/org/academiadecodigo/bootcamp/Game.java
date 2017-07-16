@@ -51,7 +51,7 @@ public class Game implements MessageHandler {
         String hasEnemy = checksInfo[5];
         int enemyHealth = Integer.parseInt(checksInfo[6]);
         String fileIfFails = checksInfo[7].trim();
-        System.out.println("file if falis: " + fileIfFails);
+        System.out.println("file if fails: " + fileIfFails);
 
         System.out.println("checks array: " + force + "-" + skill + "-" + checkScore + "-" + points + "-" + hasEnemy + "-" + enemyHealth);
 
@@ -60,10 +60,14 @@ public class Game implements MessageHandler {
         boolean skillCheck = true;
         System.out.println("skill is: " + skill);
 
-        if (!skill.equals("0")) {
-            System.out.println("entered skillcheck");
+        if (!skill.equals("0") && checkScore != 0) {
+            System.out.println("entered skillcheck, checkscore: " + checkScore);
 
-            skillCheck = GameEngine.skillCheck(player, checkScore, skill);
+            if (GameEngine.skillCheck(player, checkScore, skill)) {
+                skillCheck = true;
+            } else {
+                skillCheck = false;
+            }
         }
 
 
@@ -93,7 +97,7 @@ public class Game implements MessageHandler {
                     }
                     break;
                 case "4":
-                    if (numberOfOptions >= 3) {
+                    if (numberOfOptions >= 4) {
                         fileName = option4;
                         System.out.println("File selected :" + fileName);
                     }
@@ -102,8 +106,9 @@ public class Game implements MessageHandler {
                     System.out.println("Default donkey!");
                     break;
             }
-        } else {
+        } else if (!skillCheck) {
             fileName = fileIfFails;
+            System.out.println("failed check file to go: " + fileName);
         }
 
 
@@ -111,17 +116,22 @@ public class Game implements MessageHandler {
         if (!points.equals("0")) {
 
             if (points.equals("+") && skillCheck) {
-                GameEngine.givePoints(player, checkScore, "B");
-                return;
+                GameEngine.givePoints(player, 1, "B");
+                System.out.println("balance ++ ");
+
             }
             if (points.equals("-")) {
-                GameEngine.givePoints(player, (checkScore * (-1)), "B");
-                return;
+                GameEngine.givePoints(player, (-1), "B");
+                System.out.println("balance --");
+
             }
+            if (points.matches("[1-9]")) {
+                int pointsInt = Integer.parseInt(points);
 
-            int pointsInt = Integer.parseInt(points);
-            GameEngine.givePoints(player, pointsInt, skill);
+                GameEngine.givePoints(player, pointsInt, skill);
+                System.out.println("point given: " + pointsInt + " to " + skill);
 
+            }
         }
 
         // Battles
@@ -152,6 +162,7 @@ public class Game implements MessageHandler {
         }
 
         messageToServer = fileName;
+        System.out.println("message to server: " + fileName);
         headerBody = FileManager.load(fileName).split("\\n", 2);
         messageToServer += headerBody[1];
         calcDone = true;
