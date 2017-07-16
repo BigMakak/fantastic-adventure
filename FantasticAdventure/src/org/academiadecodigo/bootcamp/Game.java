@@ -32,6 +32,7 @@ public class Game implements MessageHandler {
         String option2 = header.substring(7, 10);
         String option3 = header.substring(10, 13);
         String option4 = header.substring(13);
+        //TODO gameEngine.skillcheck
         System.out.println(option1 + " " + option2 + " " + option3);
 
         switch (clientChoice) {

@@ -5,6 +5,8 @@ import org.academiadecodigo.bootcamp.enemy.Character;
 import org.academiadecodigo.bootcamp.enemy.CharacterSkills;
 import org.academiadecodigo.bootcamp.enemy.Enemy;
 
+import java.util.Random;
+
 
 /**
  * Created by codecadet on 10/07/17.
@@ -84,8 +86,8 @@ public class GameEngine {
 
 
 
-    private static int diceRoll() { //TODO: change to randomGenerator
+    private static int diceRoll() {
 
-        return (int) (Math.random() * 6) + 1;
+        return RandomGenerator.randomGenerator(1,6);
     }
 }

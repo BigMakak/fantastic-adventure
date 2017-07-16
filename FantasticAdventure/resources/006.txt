@@ -1,19 +1,19 @@
-
+0061008000000000 0 0 000 0 0 000
                              :shhy+
     --`                    .hysoos/
-     /yo-                  +dyhhsy:     "I can't train you but I'll give
-     .oyy:                 yhyysy+`     you his lightsaber. You can go
-       -yyo.              `ohyhhs:`     to Tatooine and ask for Kin-Wan.
-        :hhy:      `-+osyyhhhhysss+-`    Tell him that I've send you and
-         shyhs+:/oyyyhyyyyyyyyyyssooo/`    he will train you"
+     /yo-                  +dyhhsy:
+     .oyy:                 yhyysy+`     "You are a noble person. If you
+       -yyo.              `ohyhhs:`     decide to get trained in the
+        :hhy:      `-+osyyhhhhysss+-`   Force go to Tatooine and ask
+         shyhs+:/oyyyhyyyyyyyyyyssooo/`    for Kin-Wan"
           /yhyhhyyyyhyyyyyyyssssosssso+`
             -/oyyyysyyyyyyyyys++ooyysso-
                      oyyyyysyyysoosyyys:
                      +yyyyysyyyyyydhyys+
-                     +yyyyyssysyysdhyyss    1 - Accept the lightsaber
-                     /yysyysssyssyddyyso    and directions
+                     +yyyyyssysyysdhyyss    1 - You thank him for the
+                     /yysyysssyssyddyyso    directions
                      -yyssyssssyyydmyys/
-                     `yhyysysssyyyhhyyy:    2 - Refuse the lightsaber
+                     `yhyysysssyyyhhyyy:
                      -NMMNdNNNNNNNMyyyy`
                     .NMMMMMMMMMMMMNyyys
                    `dMMMMMMMMMMMMMmyyy:
