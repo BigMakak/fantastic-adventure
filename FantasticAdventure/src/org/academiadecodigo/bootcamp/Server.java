@@ -15,8 +15,6 @@ public class Server {
 
     private int port = 8080;
     private ServerSocket serverSocket;
-    private String[] clientInfo;
-
     private ExecutorService cachedThreadPool;
     private List<ClientDispatcher> list = new LinkedList<>();
     private MessageHandler messageHandler;
@@ -57,24 +55,6 @@ public class Server {
         }
     }
 
-    public synchronized String sendClientOption() {
-
-        try {
-
-            if (clientOption == null) {
-                wait();
-            }
-
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return clientOption;
-    }
-
-    public String[] getClientInfo() {
-        return this.clientInfo;
-    }
 
     public void setMessageHandler(MessageHandler messageHandler) {
         this.messageHandler = messageHandler;
@@ -85,7 +65,7 @@ public class Server {
 
         private String name;
         private String passWord;
-        private String fileName = "1";
+        private String fileName = "000";
         private Socket clientSocket;
         private BufferedReader in;
         private PrintWriter out;
@@ -106,17 +86,23 @@ public class Server {
 
                 send("\u001b[2J"); //clear screen terminal
 
-                out.println(FileManager.load("001"));
+                out.println(messageHandler.toServer());
+
 
                 while (true) {
 
                     clientOption = in.readLine();
+                    send("\u001b[2J"); //clear screen terminal
                     messageHandler.fromServer(clientOption);
-                    System.out.println("passei");
-                    //TODO: fromServer enviar clientOption
-                    String fromGame = messageHandler.toServer();
-                    fileName = fromGame.substring(0, 3);
-                    out.println(fromGame.substring(3));
+                    System.out.println("Joined String : " + fileName);
+                    String message = messageHandler.toServer();
+
+                    if (message != null && !message.equals("")) {
+
+                        out.println(message.substring(3));
+                        fileName = message.substring(0, 3);
+                    }
+
                 }
 
             } catch (IOException e) {
@@ -244,10 +230,6 @@ public class Server {
             out.flush();
         }
 
-        public String getClientOption() {
-
-            return clientOption;
-        }
 
         public String getName() {
             return name;

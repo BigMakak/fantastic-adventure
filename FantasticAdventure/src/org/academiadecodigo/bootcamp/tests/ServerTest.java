@@ -11,10 +11,10 @@ public class ServerTest {
 
         Server server = new Server();
         Game game = new Game();
+        game.init();
 
 
         server.setMessageHandler(game);
-        game.setServer(server);
         server.start();
     }
 }
