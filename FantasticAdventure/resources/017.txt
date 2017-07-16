@@ -1,0 +1,24 @@
+0172026025000000 0 0 000 0 0 000 000
+                          `````.`
+ You go to the Docks   `-......-`
+ and asked if any      `.`.`````..
+ ship goes to Tatooine `.`````   ..
+ but you dont have     -`````    `-`     1 - Go talk to the mercs
+ any luck, however      -``.`..`   `-`
+ there is a merc ship   -``.....``` `..   2 - Ignore them and go home
+ arriving from there.   -``.``...``   ..
+                        -``-`....````  `-`
+                        --`. ``...`.``  `:`
+                        -.`. ````-.s`` `.-`  ```
+                        ..`.`.```::h/`-:-```-::-..`\````\
+           ``````....-:.```..-:::--+/.---:/::::/-``-\-----``
+          :----::::/+++////--/+:+++ooo+oosyoo++/:-.-/+//oyy+-.`
+       ```:.---/:/:+++++/os++ossdhhhhyssshdddmNNNNdhyhhhhhdhhhs+
+      ``````.````.:o/::/+hmmmmmmmmmmddhyhhdddddmdddddddddddhyo`
+     ```````````---`     `:ydmmNNNNNmmh-``......`````````````
+    ```````````--`          ./ssyhhdmmmd:
+    .`````..`..`              `-+o++oosyy/`
+   .````.``..`                   ./ooooo+o+.
+  .````.`..`                       `:+oooooo:
+ .`````..`                            -/ooooo+`
+ -----.`                                ```...`

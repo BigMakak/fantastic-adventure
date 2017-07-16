@@ -1,4 +1,3 @@
-
 package org.academiadecodigo.bootcamp;
 
 import org.academiadecodigo.bootcamp.enemy.Character;
@@ -14,17 +13,7 @@ import java.util.Random;
 public class GameEngine {
 
 
-    //info from players and enemies
-    public void getFIleInfo(String fileName) {
-
-    }
-
-    public void sendFileInfo() {
-
-    }
-
-
-    private void attack(Player player, Enemy enemy, CharacterSkills skill) {
+    public static void attack(Player player, Enemy enemy/*, CharacterSkills skill*/) {
 
 
         int playerDice = diceRoll() + player.getForce();
@@ -41,53 +30,81 @@ public class GameEngine {
     }
 
 
-    private void givePoints(Player player, int value, CharacterSkills skill) {
+    public static void givePoints(Player player, int value, String skill) {
 
-        if (skillCheck(player, value, skill)) {
-            player.changeState(true, diceRoll(), skill);
+
+        if (skillCheck(player, value,skill)) {
+            player.changeState(true, diceRoll(), skillConverter(skill));
         }
     }
 
+    public static CharacterSkills skillConverter(String s) {
 
-    private boolean skillCheck(Player player, int value, CharacterSkills skill) {
+CharacterSkills skill = null;
 
+        switch (s) {
+            case "I":
+                skill = CharacterSkills.INTELLIGENCE;
+                break;
+            case "H":
+                skill = CharacterSkills.HEALTH;
+                break;
+            case "C":
+                skill = CharacterSkills.CHARISMA;
+                break;
+            case "W":
+                skill = CharacterSkills.WILLPOWER;
+                break;
+            case "S":
+                skill = CharacterSkills.SELFCONTROL;
+                break;
+            case "B":
+                skill = CharacterSkills.FORCEBALANCE;
+        }
+        return skill;
+    }
 
-        switch(skill) {
+    public static boolean skillCheck(Player player, int value, String s) {
+
+        CharacterSkills skill = skillConverter(s);
+
+        switch (skill) {
 
             case HEALTH:
-                return player.getHealth() > value;
+                return (player.getHealth() + diceRoll()) > value;
 
             case CHARISMA:
-                return player.getCharisma() > value;
+                return (player.getCharisma() + diceRoll()) > value;
 
             case INTELLIGENCE:
-                return player.getIntelligence() > value;
+                return (player.getIntelligence() + diceRoll()) > value;
 
             case WILLPOWER:
-                return player.getWillpower() > value;
+                return (player.getWillpower() + diceRoll()) > value;
 
             case SELFCONTROL:
-                return player.getSelfControl() > value;
+                return (player.getSelfControl() + diceRoll()) > value;
 
             case FORCE:
-                return player.getForce() > value;
+                return (player.getForce() + diceRoll()) > value;
 
             case FORCEBALANCE:
-                return player.getBalance() > value;
+                return (player.getBalance() + diceRoll()) > value;
         }
         return false;
     }
 
 
-    private void giveDamage(Character character, int value) {
+    public static void giveDamage(Character character, int value) {
 
         character.changeState(false, value, CharacterSkills.HEALTH);
     }
 
 
+    public static int diceRoll() {
 
-    private static int diceRoll() {
-
-        return RandomGenerator.randomGenerator(1,6);
+        int diceRoll = RandomGenerator.randomGenerator(2, 12);
+        System.out.println("diceRoll: " + diceRoll);
+        return diceRoll;
     }
 }
