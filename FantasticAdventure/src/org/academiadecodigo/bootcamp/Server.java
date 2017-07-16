@@ -87,6 +87,7 @@ public class Server {
                 send("\u001b[2J"); //clear screen terminal
 
                 out.println(messageHandler.toServer());
+                sceneTest();
                 out.println("Press 1 to start the game!");
 
                 while (true) {
@@ -244,7 +245,43 @@ public class Server {
             this.fileName = fileName;
         }
 
-    }
+        public void sceneTest() {
 
+            BufferedReader inputBufferedReader;
+            String fileContent = "";
+            String firstLine;
+            int line = 0;
+
+            try {
+                inputBufferedReader = new BufferedReader(new FileReader("resources/mainScene.txt"));
+
+                while (line < 17 ) {
+
+                        fileContent = inputBufferedReader.readLine();
+
+                    if(fileContent == null) { //Defensive programming!
+                        break;
+                    }
+                        out.println(fileContent);
+                        Thread.sleep(500);
+                        ++line;
+                }
+
+
+            } catch (FileNotFoundException ex) {
+                System.err.println("Error : " + ex.getLocalizedMessage());
+            } catch (IOException ex) {
+                System.err.println("Error :" + ex.getMessage());
+            } catch (InterruptedException ex) {
+                System.err.println("Error : " + ex.getMessage());
+            }
+        }
+    }
 }
+
+
+
+
+
+
 
