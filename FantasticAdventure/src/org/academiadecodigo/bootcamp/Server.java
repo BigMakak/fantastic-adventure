@@ -87,7 +87,7 @@ public class Server {
                 send("\u001b[2J"); //clear screen terminal
 
                 out.println(messageHandler.toServer());
-
+                out.println("Press 1 to start the game!");
 
                 while (true) {
 

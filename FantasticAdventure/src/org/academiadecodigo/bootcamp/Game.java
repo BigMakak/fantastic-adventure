@@ -28,12 +28,17 @@ public class Game implements MessageHandler {
 
     public void sendStory(String clientChoice, String header) {
 
+        int numberOfOptions = Integer.parseInt(header.substring(3, 4));
+        System.out.println("Number of Options : " + numberOfOptions);
+
         String option1 = header.substring(4, 7);
         String option2 = header.substring(7, 10);
         String option3 = header.substring(10, 13);
         String option4 = header.substring(13);
+
         //TODO gameEngine.skillcheck
         System.out.println(option1 + " " + option2 + " " + option3);
+        System.out.println("Client choice is " + clientChoice);
 
         switch (clientChoice) {
 
@@ -42,22 +47,27 @@ public class Game implements MessageHandler {
                 System.out.println("File selected :" + fileName);
                 break;
             case "2":
-                fileName = option2;
-                System.out.println("File selected :" + fileName);
+                if(numberOfOptions >= 2) {
+                    fileName = option2;
+                    System.out.println("File selected :" + fileName);
+                }
                 break;
             case "3":
-                fileName = option3;
-                System.out.println("File selected :" + fileName);
+                if(numberOfOptions >= 3) {
+                    fileName = option3;
+                    System.out.println("File selected :" + fileName);
+                }
                 break;
             case "4":
-                fileName = option4;
-                System.out.println("File selected :" + fileName);
+                if(numberOfOptions >= 3) {
+                    fileName = option4;
+                    System.out.println("File selected :" + fileName);
+                }
                 break;
             default:
                 System.out.println("Default donkey!");
                 break;
         }
-
 
         messageToServer = fileName;
 
@@ -98,4 +108,5 @@ public class Game implements MessageHandler {
         }
         return headerBody[1];
     }
+
 }
