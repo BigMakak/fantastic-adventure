@@ -93,14 +93,14 @@ public class Server {
                 while (true) {
 
                     clientOption = in.readLine();
-                    send("\u001b[2J"); //clear screen terminal
+                    send("\u001b[0m" + "\u001b[2J"); //clear screen terminal
                     messageHandler.fromServer(clientOption);
                     System.out.println("Joined String : " + fileName);
                     String message = messageHandler.toServer();
 
                     if (message != null && !message.equals("")) {
 
-                        out.println(message.substring(3));
+                        send(Color.pickColor() + "\n\n\n" + message.substring(3));
                         fileName = message.substring(0, 3);
                     }
 
