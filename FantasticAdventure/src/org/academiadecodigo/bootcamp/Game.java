@@ -181,16 +181,6 @@ public class Game implements MessageHandler {
             return;
         }
 
-       /* if (fromClient != null && !fromClient.equals("")) {
-
-            int parse = Integer.parseInt(fromClient);
-            if (!(parse > 0) && !(parse < 5)) {
-                return;
-            }
-        } else {
-            return;
-        }*/
-
 
         System.out.println("From server confirmed");
         sendStory(fromClient, headerBody[0]);

@@ -281,7 +281,7 @@ public class Server {
             try {
                 inputBufferedReader = new BufferedReader(new FileReader("resources/mainScene.txt"));
 
-                while (line < 17 ) {
+                while (line < 50 ) {
 
                         fileContent = inputBufferedReader.readLine();
 
@@ -289,7 +289,7 @@ public class Server {
                         break;
                     }
                         out.println(fileContent);
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                         ++line;
                 }
 
