@@ -75,7 +75,7 @@ public abstract class Character {
                     forceBalance += value;
                     break;
                 }
-                forceBalance -= value;
+                forceBalance += value;
                 break;
         }
     }

@@ -114,6 +114,7 @@ public class Game implements MessageHandler {
 
         // GivePoints
         if (!points.equals("0")) {
+            System.out.println("entered in point");
 
             if (points.equals("+") && skillCheck) {
                 GameEngine.givePoints(player, 1, "B");
@@ -121,7 +122,8 @@ public class Game implements MessageHandler {
 
             }
             if (points.equals("-")) {
-                GameEngine.givePoints(player, (-1), "B");
+                System.out.println("entrou no -");
+                GameEngine.givePoints(player, -1, "B");
                 System.out.println("balance --");
 
             }
@@ -173,8 +175,13 @@ public class Game implements MessageHandler {
     @Override
     public void fromServer(String fromClient) {
 
+        if (fromClient.matches("resetFile")) {
+            headerBody = FileManager.load("000").split("\\n", 2);
+            messageToServer = headerBody[1];
+            return;
+        }
 
-        if (fromClient != null && !fromClient.equals("")) {
+       /* if (fromClient != null && !fromClient.equals("")) {
 
             int parse = Integer.parseInt(fromClient);
             if (!(parse > 0) && !(parse < 5)) {
@@ -182,7 +189,7 @@ public class Game implements MessageHandler {
             }
         } else {
             return;
-        }
+        }*/
 
 
         System.out.println("From server confirmed");

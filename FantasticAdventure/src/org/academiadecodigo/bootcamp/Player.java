@@ -15,10 +15,10 @@ public class Player extends Character {
     private int willpower;
     private int selfControl;
     private int force;
-    private int balance;
+    private int forceBalance;
 
 
-    public Player(String name, int health, int charisma, int intelligence, int willpower, int selfControl, int force, int balance) {
+    public Player(String name, int health, int charisma, int intelligence, int willpower, int selfControl, int force, int forceBalance) {
         this.name = name;
         this.health = health;
         this.charisma = charisma;
@@ -26,7 +26,7 @@ public class Player extends Character {
         this.willpower = willpower;
         this.selfControl = selfControl;
         this.force = force;
-        this.balance = balance;
+        this.forceBalance = forceBalance;
     }
 
 
@@ -63,7 +63,7 @@ public class Player extends Character {
         return force;
     }
 
-    public int getBalance() {
-        return balance;
+    public int getForceBalance() {
+        return forceBalance;
     }
 }

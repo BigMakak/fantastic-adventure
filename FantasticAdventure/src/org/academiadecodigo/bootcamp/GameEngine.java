@@ -4,8 +4,6 @@ import org.academiadecodigo.bootcamp.enemy.Character;
 import org.academiadecodigo.bootcamp.enemy.CharacterSkills;
 import org.academiadecodigo.bootcamp.enemy.Enemy;
 
-import java.util.Random;
-
 
 /**
  * Created by codecadet on 10/07/17.
@@ -32,16 +30,18 @@ public class GameEngine {
 
     public static void givePoints(Player player, int value, String skill) {
 
-        if (value > 0) {
+        //if (value > 0) {
             player.changeState(true, value, skillConverter(skill));
-        } else if (value < 0) {
+        /*}
+        if (value < 0) {
             player.changeState(false, value, skillConverter(skill));
-        }
+        }*/
     }
 
     public static CharacterSkills skillConverter(String s) {
 
-CharacterSkills skill = null;
+        CharacterSkills skill;
+        skill = null;
 
         switch (s) {
             case "I":
@@ -95,7 +95,7 @@ CharacterSkills skill = null;
                 return (player.getForce() + diceRoll()) > value;
 
             case FORCEBALANCE:
-                return (player.getBalance() + diceRoll()) > value;
+                return (player.getForceBalance() + diceRoll()) > value;
         }
         return false;
     }
