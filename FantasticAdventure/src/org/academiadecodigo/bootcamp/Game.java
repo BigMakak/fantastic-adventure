@@ -13,7 +13,6 @@ public class Game implements MessageHandler {
 
     private Player player;
     private EnemyFactory enemyFactory;
-    //private GameEngine gameEngine;
     private String[] headerBody;
     private String fileName = "";
     private String messageToServer;
@@ -22,7 +21,6 @@ public class Game implements MessageHandler {
 
     public void init() {
         enemyFactory = new EnemyFactory();
-        //gameEngine = new GameEngine();
         player = new Player("Jorge", 10, 10, 10, 10, 10, 10, 10);
         headerBody = FileManager.load("000").split("\\n", 2);
         messageToServer = headerBody[1];

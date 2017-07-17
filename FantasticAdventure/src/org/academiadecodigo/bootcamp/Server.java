@@ -3,6 +3,7 @@ package org.academiadecodigo.bootcamp;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -16,8 +17,7 @@ public class Server {
     private int port = 8080;
     private ServerSocket serverSocket;
     private ExecutorService cachedThreadPool;
-    private List<ClientDispatcher> list = new LinkedList<>();
-    private MessageHandler messageHandler;
+    private List<ClientDispatcher> list = Collections.synchronizedList(new LinkedList<>()); // locked by itself
 
     public Server() {
 
@@ -55,9 +55,7 @@ public class Server {
     }
 
 
-    public void setMessageHandler(MessageHandler messageHandler) {
-        this.messageHandler = messageHandler;
-    }
+
 
 
     public class ClientDispatcher implements Runnable {
@@ -69,6 +67,7 @@ public class Server {
         private BufferedReader in;
         private PrintWriter out;
         private String clientOption;
+        private MessageHandler messageHandler;
 
         private ClientDispatcher(Socket clientSocket) {
 
@@ -93,9 +92,9 @@ public class Server {
 
                 messageHandler.fromServer("resetFile");
 
-                out.println(messageHandler.toServer());
+                send(messageHandler.toServer());
                 sceneTest();
-                out.println("Press 1 to start the game. Write !leave to leave the game. Write !how to see game instructions.");
+                send("Press 1 to start the game. Write !leave to leave the game. Write !how to see game instructions.");
 
 
                 while (true) {
@@ -112,20 +111,18 @@ public class Server {
                         send(  "\u001b[2J"); //clear screen terminal
 
                         messageHandler.fromServer(clientOption);
-                        //System.out.println("Joined String : " + fileName);
-
                         String message = messageHandler.toServer();
 
                         if (message != null && !message.equals("")) {
 
-                            //String color = Color.pickColor();
-                             send(message.substring(3));
+                            //send(Color.pickColor());
+                            send( message.substring(3));
 
-                             fileName = message.substring(0, 3);
+                            fileName = message.substring(0, 3);
                         }
 
                     } else {
-                        if(!clientOption.matches("!how")) {
+                        if (!clientOption.matches("!how")) {
                             out.println("Not a valid option...Try again");
                         }
                         continue;
@@ -281,16 +278,16 @@ public class Server {
             try {
                 inputBufferedReader = new BufferedReader(new FileReader("resources/mainScene.txt"));
 
-                while (line < 50 ) {
+                while (line < 50) {
 
-                        fileContent = inputBufferedReader.readLine();
+                    fileContent = inputBufferedReader.readLine();
 
-                    if(fileContent == null) { //Defensive programming!
+                    if (fileContent == null) { //Defensive programming!
                         break;
                     }
-                        out.println(fileContent);
-                        Thread.sleep(1000);
-                        ++line;
+                    out.println(fileContent);
+                    Thread.sleep(1000);
+                    ++line;
                 }
 
 
@@ -304,18 +301,20 @@ public class Server {
         }
 
         public void leaveGame(String clientOption) {
-            if(clientOption.matches("!leave")) {
+            if (clientOption.matches("!leave")) {
                 out.println("Try harder next time");
                 //saveClientState();
                 System.exit(0);
             }
         }
+
         private void gameInstructions(String clientOption) {
-            if(clientOption.matches("!how")) {
+            if (clientOption.matches("!how")) {
                 out.println("-->Start your adventure and chose between the possible options to proceed \n " +
                         "you can die from wrong choices");
             }
         }
+
         public boolean validClientOption(String clientOption) {
 
             return clientOption.matches("[1-4]");

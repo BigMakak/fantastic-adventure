@@ -7,5 +7,5 @@ public interface MessageHandler {
 
     void fromServer(String fromClient);
 
-    String toServer();//Argument no server para mandar strings;
+    String toServer();
 }

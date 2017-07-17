@@ -30,12 +30,8 @@ public class GameEngine {
 
     public static void givePoints(Player player, int value, String skill) {
 
-        //if (value > 0) {
-            player.changeState(true, value, skillConverter(skill));
-        /*}
-        if (value < 0) {
-            player.changeState(false, value, skillConverter(skill));
-        }*/
+        player.changeState(true, value, skillConverter(skill));
+
     }
 
     public static CharacterSkills skillConverter(String s) {
